@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+</head>
+<body>
+    <%- include('partials/header') %>
+ <h2>Welcome to Blog Page</h2>
+
+ <% if (messages.error) { %>
+  <p style="color: red;"><%= messages.success %></p>
+ <% } %>
+ <% if (messages.success) { %>
+  <p style="color: green;"><%= messages.success %></p>
+ <% } %>
+ <h2>All Posts</h2>
+ <!-- <a href="/posts/create">Create New Post</a> -->
+    <ul>
+        <% posts.forEach(post => { %>
+         <li>
+            <a href="/posts/<%= post._id %>"><%= post.title %></a>
+            <small> created by <%= post.author %></small>
+         </li>
+        <% }) %>
+    </ul>
+</body>
+</html>

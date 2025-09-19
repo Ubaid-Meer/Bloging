@@ -1,0 +1,86 @@
+const Post=require('../models/postModel')
+
+// show all post
+exports.getAllPosts=async(req,res)=>{
+    try {
+        const posts=await Post.find().sort({createdAt:-1})
+        res.render('home',{posts})
+
+    } catch (error) {
+        console.error(error)
+        res.redirect('/')
+    }
+};
+
+// show Create form
+exports.getCreatePost=(req,res)=>{
+    res.render('create')
+
+};
+
+// post the blog
+exports.createPost=async(req,res)=>{
+    try {
+        if(!req.session.user){
+            res.flash("Error: You must Be Login")
+            res.redirect('/auth/login')
+
+        }
+        const {title,content}=req.body;
+        await Post.create({
+            title,
+            content,
+            author:req.session.user.userName,
+        });
+        req.flash('Success', 'Post Created')
+        res.redirect('/')
+    } catch (error) {   
+        console.error(error)
+        res.redirect('/posts/create')
+    }
+}
+
+
+// get single post 
+exports.getSinglePost=async(req,res)=>{
+    try {
+        const post=await Post.findById(req.params.id);
+        res.render('post',{post})
+    } catch (error) {
+         console.error(error)
+        res.redirect('/')
+    }
+}
+
+exports.getEditPost=async(req,res)=>{
+    try {
+        const post=await Post.findById(req.params.id)
+        res.render('edit',{post})
+    } catch (error) {
+         console.error(error)
+        res.redirect('/')
+    }
+}
+
+// update post\
+exports.updatePost=async(req,res)=>{
+    try {
+        const {title,content}=req.body
+        await Post.findByIdAndUpdate(req.params.id,{title,content});
+        res.redirect(`/posts/${req.params.id}`);
+
+    } catch (error) {
+         console.error(error)
+        res.redirect(`/posts/edit/${req.params.id}`)
+    }
+};
+
+exports.deletePost=async(req,res)=>{
+    try {
+        await Post.findByIdAndDelete(req.params.id)
+        res.redirect('/')
+    } catch (error) {
+         console.error(error)
+        res.redirect('/')
+    }
+}

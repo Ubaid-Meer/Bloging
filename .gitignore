@@ -1,0 +1,9 @@
+node_modules/
+ npm-degug.log*
+ yarn-degug.log*
+ yarn-error.log*
+
+.env
+
+.DS_Store
+Thumbs.db

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        box-sizing: border-box;
+        top: 0;
+        margin: 0;
+      }
+      nav {
+        display: flex;
+        justify-content: flex-end; /* pushes links to the right */
+        background: #363333; /* optional */
+        padding: 10px;
+      }
+    
+      
+      nav a {
+        text-decoration: none;
+        color: #ecebeb;
+        margin-left: 25px;
+        font-weight: bold;
+      }
+
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="home" href="/">Home</a>
+      <% if (!session.user) { %>
+      <a href="/auth/register">Register</a>
+      <a href="/auth/login">Login</a>
+      <% } else { %>
+      <a href="/posts/create">Create New Post</a>
+      <a href="/auth/logout">Logout</a>
+      <% } %>
+    </nav>
+  </body>
+</html>
