@@ -4,17 +4,115 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Form</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+        body{
+
+            background:url('/images/earth1.jpg');
+            /* background:url('img.jpg'); */
+            /* background-image: url('/publics/images/webimage2.jpg'); */
+            /* background-color: rgb(46, 44, 44); */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 30vh;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .form-div{
+           /* display: flex; */
+           justify-content: center;
+           align-items: center;
+           height: 60%;
+            position: relative;
+            margin-left: 130vh;
+            border: 2px solid rgb(7, 6, 6);
+            border-radius: 10px;
+            background: transparent;
+            backdrop-filter: blur(15px);
+
+        }
+        .form-div h2{
+            color: #FFF;
+            margin-top: 4%;
+            margin-bottom: 4%;
+            /* margin-left: 20px; */
+           display: flex;
+           justify-content: center;
+           align-items: center;
+        }
+        .form-div label{
+            color: #fff;
+            font-size: large;
+            
+        }
+        .form-div input{
+            margin-top: 20px;
+            margin-left: 40px;
+
+            margin-right: 20px;
+            display: flex;
+            width: 300px;
+            height: 40px;
+            border-radius: 10px;
+            padding: 10px 5px ;
+            font-size: 20px;
+            border: 2px solid aqua;
+            backdrop-filter: blur(5px);
+            background: transparent;
+            color: #fff;
+
+        }
+        form{
+            margin-left: 20px;
+        }
+        p{
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 20px;
+
+        }
+        p .regLink{
+               font-size: 20px;
+                /* text-decoration: none; */
+        }
+        .btn{
+            padding: 10px;
+            margin-top: 30px;
+            font-weight: bold;
+            font-size: 20px;
+            margin-left: 38px;
+            width: 84%;
+            border-radius: 10px;
+            background-color: cadetblue;
+            
+            
+        }
+    </style>
 </head>
 <body>
-    <% if (error) { %>
-        <p style="color: red;"><%= error %></p>
-     
-    <% } %>
-    <form action="/auth/login" method="post">
-        Email: <input type="email" name="email" required placeholder="Email"><br> 
-        Password:<input type="password" name="password" required placeholder="Password"><br>
-        <p>Don't have Account <a href="/auth/register">Register</a></p>
-        <button type="submit">Submit</button>
-    </form>
+    <div class="form-div">
+        <h2>Login Form</h2>
+
+        <% if (error) { %>
+            <p style="color: red;"><%= error %></p>
+            
+            <% } %>
+            <form action="/auth/login" method="post">
+               <label for=""> Email:</label> <input type="email" name="email" required placeholder="Email"><br> 
+                <label for="">Password:</label><input type="password" name="password" required placeholder="Password"><br>
+                <p>Don't have Account : <a class="regLink" href="/auth/register">Register</a></p>
+                <button class="btn" type="submit">Submit</button>
+            </form>
+        </div>
 </body>
 </html>
