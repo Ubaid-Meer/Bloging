@@ -17,4 +17,10 @@ router.post('/login',userController.loginUser)
 
 router.get('/logout',userController.logoutUser)
 
+router.get('/forgot',(req,res)=>res.render('auth/forgot'))
+router.post('/forgot',userController.forgotPass)
+
+// router.get('/reset/:token',(req,res)=>res.render('auth/reset'))
+router.get('/reset/:token',userController.showResetForm)
+router.post('/reset/:token',userController.resetPass)
 module.exports=router;

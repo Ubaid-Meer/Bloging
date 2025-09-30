@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
+    <style>
+        .author{
+            text-decoration: underline;
+            font-family: sans-serif;
+            /* color: rgb(10, 59, 124); */
+        }
+        .postId{
+            font-size: large;
+        }
+    </style>
 </head>
 <body>
     <%- include('partials/header') %>
@@ -20,10 +30,11 @@
     <ul>
         <% posts.forEach(post => { %>
          <li>
-            <a href="/posts/<%= post._id %>"><%= post.title %></a>
-            <small> created by <%= post.author %></small>
+            <a class="postId" href="/posts/<%= post._id %>"><%= post.title %></a>
+            <span> Created By <strong class="author"><%= post.author %></strong></span>
          </li>
         <% }) %>
     </ul>
+    <a href="/auth/forgot">Forgot</a>
 </body>
 </html>

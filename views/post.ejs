@@ -7,12 +7,41 @@
 
 </head>
 <body>
+    <%- include('partials/header') %>
+
     <h1><%= post.title %></h1>
     <p><%= post.content %></p>
-    <small>By <%= post.author %> ||<%= post.createdAt.toDateString() %></small>
+    <p style="font-weight: bold;">By <%= post.author %> ||<%= post.createdAt.toDateString() %></p>
     <hr>
     <a href="/">Back To Home</a>
     <a href="/posts/edit/<%= post._id %>">Edit</a>
     <a href="/posts/delete/<%= post._id %>">Delete</a>
+    <h3>Comments:</h3>
+    <ul>
+        <% if (post.comments.length > 0) { %>
+            <% post.comments.forEach(comment => { %>
+                <li>
+                    <strong><%= comment.author %>:</strong><%= comment.text %>
+                    <small>(<%= comment.createdAt.toDateString() %>)</small>
+                </li>
+             
+            <% }) %>
+             <% } else { %>
+                <li>No Comment Here</li>   
+        <% }  %>
+    </ul>
+
+    
+
+   
+        <form action="/posts/<%= post.id %>/comments" method="post">
+            <textarea name="text" required placeholder="Write you Comments" id="">
+
+            </textarea>
+            <button type="submit">Submit</button>
+        </form>
+   
+      <p><a href="/auth/login">Login</a>to comment</p>
+    
 </body>
 </html>

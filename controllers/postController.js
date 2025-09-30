@@ -4,11 +4,11 @@ const Post=require('../models/postModel')
 exports.getAllPosts=async(req,res)=>{
     try {
         const posts=await Post.find().sort({createdAt:-1})
-        res.render('home',{posts})
+        return res.render('home',{posts})
 
     } catch (error) {
         console.error(error)
-        res.redirect('/')
+       return res.redirect('/')
     }
 };
 
@@ -22,8 +22,8 @@ exports.getCreatePost=(req,res)=>{
 exports.createPost=async(req,res)=>{
     try {
         if(!req.session.user){
-            res.flash("Error: You must Be Login")
-            res.redirect('/auth/login')
+            req.flash("Error: You must Be Login")
+           return res.redirect('/auth/login')
 
         }
         const {title,content}=req.body;
@@ -33,10 +33,10 @@ exports.createPost=async(req,res)=>{
             author:req.session.user.userName,
         });
         req.flash('Success', 'Post Created')
-        res.redirect('/')
+       return res.redirect('/')
     } catch (error) {   
         console.error(error)
-        res.redirect('/posts/create')
+      return  res.redirect('/posts/create')
     }
 }
 
@@ -45,10 +45,10 @@ exports.createPost=async(req,res)=>{
 exports.getSinglePost=async(req,res)=>{
     try {
         const post=await Post.findById(req.params.id);
-        res.render('post',{post})
+        return res.render('post',{post})
     } catch (error) {
          console.error(error)
-        res.redirect('/')
+        return res.redirect('/')
     }
 }
 
@@ -58,7 +58,7 @@ exports.getEditPost=async(req,res)=>{
         res.render('edit',{post})
     } catch (error) {
          console.error(error)
-        res.redirect('/')
+       return res.redirect('/')
     }
 }
 
@@ -67,20 +67,54 @@ exports.updatePost=async(req,res)=>{
     try {
         const {title,content}=req.body
         await Post.findByIdAndUpdate(req.params.id,{title,content});
-        res.redirect(`/posts/${req.params.id}`);
+        return res.redirect(`/posts/${req.params.id}`);
 
     } catch (error) {
          console.error(error)
-        res.redirect(`/posts/edit/${req.params.id}`)
+       return res.redirect(`/posts/edit/${req.params.id}`)
     }
 };
 
 exports.deletePost=async(req,res)=>{
     try {
         await Post.findByIdAndDelete(req.params.id)
-        res.redirect('/')
+       return res.redirect('/')
     } catch (error) {
          console.error(error)
-        res.redirect('/')
+       return res.redirect('/')
+    }
+}
+
+//Comments controll
+
+
+exports.addComment=async(req,res)=>{
+    try {
+        
+        if(!req.session.user){
+            req.flash("error","Login First Please");
+            res.redirect('/auth/login')
+        }
+        
+        const post=await Post.findById(req.params.id);
+        
+        if(!post){
+            req.flash('error',"Post not Found")
+            res.redirect('/')
+        }
+        
+        post.comments.push({
+            text:req.body.text,
+            author:req.session.user.userName
+            
+        })
+        await post.save();
+        
+        req.flash('success',"Comment Added Successfully")
+        req.redirect(`/posts/${req.params.id}`);
+        
+    } catch (error) {
+        console.error(error)
+        res.redirect(`/posts/${req.params.id}`)
     }
 }

@@ -79,15 +79,19 @@
             justify-content: center;
             color: #fff;
             font-size: 20px;
+            margin-right: 40px;
 
         }
         p .regLink{
                font-size: 20px;
                color:rgb(159, 209, 209);
                text-decoration: none;
+                 position: absolute;
+               margin-left: 75%;
             }
             .regLink:hover{
-                font-weight: bold;
+                transition: 1s ;
+                /* font-weight: bold; */
                 text-decoration: underline;
                 color: rgb(131, 216, 202);
         }
@@ -103,9 +107,32 @@
             
             
         }
+        .homeLink{
+            position: absolute;
+            margin-bottom: 60%; 
+            text-decoration: none;
+            color: rgb(253, 253, 253);
+            background-color: #0a0a0a;
+            padding: 10px;
+            border-radius: 15px;
+            font-size: 20px;
+            box-shadow:2px 2px 5px white;
+            
+            
+        }
+        .homeLink:hover{
+            box-shadow:3px 3px 5px white;
+            text-decoration:underline;
+            transition: underline 0.5s ;
+
+        }
     </style>
 </head>
 <body>
+
+       <a class="homeLink" href="/">Home</a>
+
+  
     <div class="form-div">
         <h2>Login Form</h2>
 
@@ -116,6 +143,7 @@
             <form action="/auth/login" method="post">
                <label for=""> Email:</label> <input type="email" name="email" required placeholder="Email"><br> 
                 <label for="">Password:</label><input type="password" name="password" required placeholder="Password"><br>
+                <p><a href="/auth/forgot">Forgot Password</a></p>
                 <p>Don't have Any Account : <a class="regLink" href="/auth/register"> Register</a></p>
                 <button class="btn" type="submit">Submit</button>
             </form>
